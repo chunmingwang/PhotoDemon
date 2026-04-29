@@ -164,24 +164,27 @@ Private m_IsNotFirstActivation As Boolean
 
 'Because this form needs to interact with both the command bar that raises this dialog, and its preset manager,
 ' we must maintain references to both.  These references are initially supplied via the showDialog function.
-Private m_Presets As pdToolPreset, m_CommandBar As pdCommandBar
+Private m_Presets As pdToolPreset
+
+'Name of the preset to save, if any.
+Private m_newPresetName As String
 
 Public Property Get DialogResult() As VbMsgBoxResult
     DialogResult = m_userAnswer
 End Property
 
 'The ShowDialog routine presents the user with this form.
-Public Sub ShowDialog(ByRef srcPresetManager As pdToolPreset, ByRef srcCommandBar As pdCommandBar, ByRef parentForm As Form)
+Public Sub ShowDialog(ByRef srcPresetManager As pdToolPreset, ByRef dstPresetNameToSave As String, ByRef parentForm As Form)
 
     'Provide a default answer of "cancel" (in the event that the user clicks the "x" button in the top-right)
     m_userAnswer = vbCancel
+    m_newPresetName = vbNullString
     
     'Make sure that a proper cursor is set
     Screen.MousePointer = 0
     
     'Maintain a persistent reference to the source command bar and its preset manager
     Set m_Presets = srcPresetManager
-    Set m_CommandBar = srcCommandBar
     
     'Before making any changes to the preset object, back up its current contents
     m_Presets.BackupPresetsInternally
@@ -197,6 +200,9 @@ Public Sub ShowDialog(ByRef srcPresetManager As pdToolPreset, ByRef srcCommandBa
     
     'Display the dialog
     Me.Show vbModal, parentForm
+    
+    'Relay the new preset name, if any, to the caller
+    If (LenB(m_newPresetName) > 0) Then dstPresetNameToSave = m_newPresetName Else dstPresetNameToSave = vbNullString
     
 End Sub
 
@@ -282,7 +288,7 @@ Private Sub cmdBarMini_OKClick()
             
             'If the user is okay with us proceeding, update the preset they have just entered.
             ' (Note that this will also update our locally shared m_Presets object.)
-            If (m_userAnswer = vbOK) Then m_CommandBar.StorePreset Trim$(txtName.Text)
+            If (m_userAnswer = vbOK) Then m_newPresetName = Trim$(txtName.Text)
             
         Else
             
@@ -372,7 +378,6 @@ Private Sub Form_Unload(Cancel As Integer)
     
     'Release our hold on the parent command bar
     Set m_Presets = Nothing
-    Set m_CommandBar = Nothing
     Interface.ReleaseFormTheming Me
     
 End Sub

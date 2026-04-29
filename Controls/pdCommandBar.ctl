@@ -590,8 +590,8 @@ Private Function SavePreset() As Boolean
     Message "Saving preset..."
     
     'Prompt the user for a name
-    Dim newNameReturn As VbMsgBoxResult
-    newNameReturn = Dialogs.PromptNewPreset(m_Presets, Me, UserControl.Parent)
+    Dim newNameReturn As VbMsgBoxResult, newPresetToSave As String
+    newNameReturn = Dialogs.PromptNewPreset(m_Presets, newPresetToSave, UserControl.Parent)
     
     If (newNameReturn = vbOK) Then
     
@@ -599,6 +599,9 @@ Private Function SavePreset() As Boolean
         
         'Start by disabling previews
         m_allowPreviews = False
+        
+        'If we were given a new preset name to save, save it now
+        If (LenB(newPresetToSave) > 0) Then StorePreset newPresetToSave
         
         'Reset the preset names combo box to match any changes the user has made
         LoadAllPresets
@@ -1132,7 +1135,7 @@ End Sub
 
 'This sub will fill the class's pdXML class (xmlEngine) with the values of all controls on this form, and it will store
 ' those values in the section titled "presetName".
-Public Sub StorePreset(Optional ByVal srcPresetName As String = "last-used settings")
+Private Sub StorePreset(Optional ByVal srcPresetName As String = "last-used settings")
     
     'Make sure PD's built-in "last-used settings" text is properly translated
     If (Not g_Language Is Nothing) And Strings.StringsEqual(srcPresetName, "last-used settings", True) Then srcPresetName = g_Language.TranslateMessage("last-used settings")
@@ -1415,7 +1418,7 @@ Private Function LoadPresetFromString(ByRef srcString As String, Optional ByVal 
                     ' unlike internal listboxes.)
                     Case "pdDropDownFont"
                         Dim fontListIndex As Long
-                        fontListIndex = eControl.ListIndexByString(srcString, vbTextCompare)
+                        fontListIndex = eControl.ListIndexByString(controlValue, vbTextCompare)
                         If (fontListIndex >= 0) Then eControl.ListIndex = fontListIndex Else eControl.ListIndex = eControl.ListIndexByString(Fonts.GetUIFontName())
                     
                     'Text boxes just take the stored string as-is
