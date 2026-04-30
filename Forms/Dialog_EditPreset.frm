@@ -398,3 +398,7 @@ Private Sub UpdateEditButtons()
     cmdMove(0).Enabled = (lstPresets.ListIndex > 0)
     cmdMove(1).Enabled = (lstPresets.ListIndex < lstPresets.ListCount - 1) And (lstPresets.ListIndex >= 0)
 End Sub
+
+Private Sub txtName_KeyPress(ByVal Shift As ShiftConstants, ByVal vKey As Long, preventFurtherHandling As Boolean)
+    If (vKey = VK_RETURN) Then cmdBarMini.ClickOKForMe
+End Sub
