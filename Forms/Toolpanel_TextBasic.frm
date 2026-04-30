@@ -634,7 +634,13 @@ End Sub
 'Add a new text style to the user's saved style collection.  This behaves identically to the preset management
 ' in standalone PD windows; see the command bar UC for additional implementation details.
 Private Sub cmdAddStyle_Click(ByVal Shift As ShiftConstants)
-
+    
+    'Opening a new dialog will auto-close the current flyout panel.  To prevent this, lock it open
+    ' *prior* to raising the dialog.
+    Dim initFlyoutLockState As Boolean
+    initFlyoutLockState = cmdFlyoutLock(0).Value
+    If (Not m_Flyout Is Nothing) Then m_Flyout.UpdateLockStatus Me.cntrPopOut(0).hWnd, True, cmdFlyoutLock(0)
+    
     'Prompt the user for a name
     Dim newNameReturn As VbMsgBoxResult, newPresetToSave As String
     newNameReturn = Dialogs.PromptNewPreset(m_Presets, newPresetToSave, Me)
@@ -649,29 +655,31 @@ Private Sub cmdAddStyle_Click(ByVal Shift As ShiftConstants)
         'If we were given a new preset name to save, save it now
         If (LenB(newPresetToSave) > 0) Then StorePreset newPresetToSave
         
-        'Reset the preset names combo box to match any changes the user has made
-        LoadAllPresets
-        
-        'If the user just added a preset, set the combo box index to match the preset they added
-        Dim newlyAddedPresetName As String
-        newlyAddedPresetName = m_Presets.GetActivePresetName()
-        
-        If (LenB(newlyAddedPresetName) <> 0) Then
-            Dim i As Long
-            For i = 0 To ddStyle.ListCount - 1
-                If Strings.StringsEqual(newlyAddedPresetName, Trim$(ddStyle.List(i)), True) Then
-                    ddStyle.ListIndex = i
-                    Exit For
-                End If
-            Next i
-        End If
-        
-        m_Presets.ClearActivePresetName
+    End If
+    
+    'The user can remove presets and then *cancel* the dialog, so always re-load all presets.
+    LoadAllPresets
+    
+    'If the user just added a preset, set the combo box index to match the preset they added
+    If (newNameReturn = vbOK) And (LenB(newPresetToSave) <> 0) Then
+    
+        Dim i As Long
+        For i = 0 To ddStyle.ListCount - 1
+            If Strings.StringsEqual(newPresetToSave, Trim$(ddStyle.List(i)), True) Then
+                ddStyle.ListIndex = i
+                Exit For
+            End If
+        Next i
         
         'Re-enable previews
         m_suspendSettingRelay = False
         
+    Else
+        ddStyle.ListIndex = 0
     End If
+    
+    'Restore the original flyout lock state
+    If (Not m_Flyout Is Nothing) Then m_Flyout.UpdateLockStatus Me.cntrPopOut(0).hWnd, initFlyoutLockState, cmdFlyoutLock(0)
     
 End Sub
 
@@ -851,7 +859,7 @@ Private Sub m_Flyout_FlyoutClosed(origTriggerObject As Control)
     If (Not origTriggerObject Is Nothing) Then origTriggerObject.Value = False
 End Sub
 
-Private Sub m_lastUsedSettings_ReadCustomPresetData()
+Private Sub m_LastUsedSettings_ReadCustomPresetData()
     
     'We don't actually need to read anything here - we just want to always default the style dropdown
     ' to a "blank" value (so that last-used settings are used instead)
@@ -1277,7 +1285,7 @@ Private Sub LoadAllPresets(Optional ByVal newListIndex As Long = 0)
     ddStyle.SetAutomaticRedraws False
     
     'We always add one blank entry to the preset combo box, which is selected by default
-    ddStyle.AddItem " ", 0
+    ddStyle.AddItem " ", 0, True
 
     'Query the preset manager for any available presets.  If found, it will return the number of available presets
     Dim listOfPresets As pdStringStack
@@ -1287,7 +1295,7 @@ Private Sub LoadAllPresets(Optional ByVal newListIndex As Long = 0)
         ' as that would reverse the preset order!
         Dim i As Long
         For i = 0 To listOfPresets.GetNumOfStrings() - 1
-            ddStyle.AddItem listOfPresets.GetString(i), i + 1, (i = 0) And (listOfPresets.GetNumOfStrings() > 1)
+            ddStyle.AddItem listOfPresets.GetString(i), i + 1, False
         Next i
         
     End If
@@ -1368,6 +1376,10 @@ Private Function LoadPresetFromString(ByRef srcString As String, Optional ByVal 
                     'Option buttons use booleans
                     Case "pdRadioButton"
                         If CBool(controlValue) Then eControl.Value = CBool(controlValue)
+                    
+                    'Toolbox-style buttons should only be saved if they use the sticky-toggle feature
+                    Case "pdButtonToolbox"
+                        If eControl.StickyToggle Then eControl.Value = CBool(controlValue)
                         
                     'Button strips are similar to list boxes, so they use a .ListIndex property
                     Case "pdButtonStrip", "pdButtonStripVertical"
@@ -1395,7 +1407,7 @@ Private Function LoadPresetFromString(ByRef srcString As String, Optional ByVal 
                     
                     'Traditional scroll bar values are cast as Longs, despite them only having Int ranges
                     ' (hopefully the original caller planned for this!)
-                    Case "HScrollBar", "VScrollBar"
+                    Case "pdScrollBar"
                         eControl.Value = CLng(controlValue)
                     
                     'List boxes and dropdowns all use a Long-type .ListIndex property

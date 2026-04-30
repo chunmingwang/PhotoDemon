@@ -91,17 +91,17 @@ Begin VB.Form dialog_AddPreset
          Left            =   240
          TabIndex        =   3
          Top             =   1800
-         Width           =   945
-         _ExtentX        =   1667
+         Width           =   915
+         _ExtentX        =   1614
          _ExtentY        =   1085
       End
       Begin PhotoDemon.pdButton cmdDelete 
          Height          =   615
-         Left            =   2370
+         Left            =   2400
          TabIndex        =   6
          Top             =   1800
-         Width           =   4125
-         _ExtentX        =   7276
+         Width           =   4005
+         _ExtentX        =   7064
          _ExtentY        =   1085
          Caption         =   "delete preset"
       End
@@ -122,8 +122,8 @@ Begin VB.Form dialog_AddPreset
          Left            =   1305
          TabIndex        =   4
          Top             =   1800
-         Width           =   945
-         _ExtentX        =   1667
+         Width           =   900
+         _ExtentX        =   1588
          _ExtentY        =   1085
       End
    End
@@ -188,18 +188,16 @@ Public Sub ShowDialog(ByRef srcPresetManager As pdToolPreset, ByRef dstPresetNam
     
     'Before making any changes to the preset object, back up its current contents
     m_Presets.BackupPresetsInternally
-    m_Presets.ClearActivePresetName
     
     'Populate the "existing presets" list, if any exist
     UpdatePresetList
-    
     UpdateEditButtons
     
     'Theme the dialog
     ApplyThemeAndTranslations Me
     
     'Display the dialog
-    Me.Show vbModal, parentForm
+    Interface.ShowPDDialog vbModal, Me
     
     'Relay the new preset name, if any, to the caller
     If (LenB(m_newPresetName) > 0) Then dstPresetNameToSave = m_newPresetName Else dstPresetNameToSave = vbNullString
