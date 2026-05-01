@@ -631,6 +631,14 @@ Private Sub cboTextRenderingHint_SetCustomTabTarget(ByVal shiftTabWasPressed As 
     End If
 End Sub
 
+Private Sub chkAutoOpenText_SetCustomTabTarget(ByVal shiftTabWasPressed As Boolean, newTargetHwnd As Long)
+    If shiftTabWasPressed Then
+        newTargetHwnd = Me.cmdAddStyle.hWnd
+    Else
+        newTargetHwnd = Me.cmdFlyoutLock(0).hWnd
+    End If
+End Sub
+
 'Add a new text style to the user's saved style collection.  This behaves identically to the preset management
 ' in standalone PD windows; see the command bar UC for additional implementation details.
 Private Sub cmdAddStyle_Click(ByVal Shift As ShiftConstants)
@@ -683,6 +691,18 @@ Private Sub cmdAddStyle_Click(ByVal Shift As ShiftConstants)
     
 End Sub
 
+Private Sub cmdAddStyle_GotFocusAPI()
+    UpdateFlyout 0, True
+End Sub
+
+Private Sub cmdAddStyle_SetCustomTabTarget(ByVal shiftTabWasPressed As Boolean, newTargetHwnd As Long)
+    If shiftTabWasPressed Then
+        newTargetHwnd = Me.ddStyle.hWnd
+    Else
+        newTargetHwnd = Me.chkAutoOpenText.hWnd
+    End If
+End Sub
+
 Private Sub cmdFlyoutLock_Click(Index As Integer, ByVal Shift As ShiftConstants)
     If (Not m_Flyout Is Nothing) Then m_Flyout.UpdateLockStatus Me.cntrPopOut(Index).hWnd, cmdFlyoutLock(Index).Value, cmdFlyoutLock(Index)
 End Sub
@@ -696,7 +716,7 @@ Private Sub cmdFlyoutLock_SetCustomTabTarget(Index As Integer, ByVal shiftTabWas
     Select Case Index
         Case 0
             If shiftTabWasPressed Then
-                newTargetHwnd = Me.txtTextTool.hWnd
+                newTargetHwnd = Me.chkAutoOpenText.hWnd
             Else
                 newTargetHwnd = Me.ttlPanel(1).hWnd
             End If
@@ -748,6 +768,18 @@ End Sub
 
 Private Sub ddStyle_Click()
     If (ddStyle.ListIndex > 0) And (Not m_suspendSettingRelay) Then LoadPreset ddStyle.List(ddStyle.ListIndex)
+End Sub
+
+Private Sub ddStyle_GotFocusAPI()
+    UpdateFlyout 0, True
+End Sub
+
+Private Sub ddStyle_SetCustomTabTarget(ByVal shiftTabWasPressed As Boolean, newTargetHwnd As Long)
+    If shiftTabWasPressed Then
+        newTargetHwnd = Me.txtTextTool.hWnd
+    Else
+        newTargetHwnd = Me.cmdAddStyle.hWnd
+    End If
 End Sub
 
 Private Sub Form_Load()
@@ -995,7 +1027,7 @@ Private Sub txtTextTool_SetCustomTabTarget(ByVal shiftTabWasPressed As Boolean, 
     If shiftTabWasPressed Then
         newTargetHwnd = Me.hypEditText.hWnd
     Else
-        newTargetHwnd = Me.cmdFlyoutLock(0).hWnd
+        newTargetHwnd = Me.ddStyle.hWnd
     End If
 End Sub
 
