@@ -338,8 +338,9 @@ Attribute VB_Exposed = False
 'PhotoDemon Basic Text Tool Panel
 'Copyright 2013-2026 by Tanner Helland
 'Created: 02/Oct/13
-'Last updated: 09/March/22
-'Last update: new checkbox for auto-dropping text entry field after creating a new text layer
+'Last updated: 01/May/25
+'Last update: new text styles feature allows users to save all current text settings as a "style"
+'             (a glorified text-specific preset)
 '
 'This form includes all user-editable settings for the Basic Text tool.
 '
@@ -639,23 +640,23 @@ Private Sub chkAutoOpenText_SetCustomTabTarget(ByVal shiftTabWasPressed As Boole
     End If
 End Sub
 
-'Add a new text style to the user's saved style collection.  This behaves identically to the preset management
+'Add a new text style to the user's saved style collection.  This behaves similarly to the preset management
 ' in standalone PD windows; see the command bar UC for additional implementation details.
 Private Sub cmdAddStyle_Click(ByVal Shift As ShiftConstants)
     
-    'Opening a new dialog will auto-close the current flyout panel.  To prevent this, lock it open
-    ' *prior* to raising the dialog.
+    'Opening a new dialog will auto-close the current flyout panel.
+    ' To prevent this, lock it open *prior* to raising the dialog.
     Dim initFlyoutLockState As Boolean
     initFlyoutLockState = cmdFlyoutLock(0).Value
     If (Not m_Flyout Is Nothing) Then m_Flyout.UpdateLockStatus Me.cntrPopOut(0).hWnd, True, cmdFlyoutLock(0)
     
-    'Prompt the user for a name
+    'Prompt the user for a style name
     Dim newNameReturn As VbMsgBoxResult, newPresetToSave As String
     newNameReturn = Dialogs.PromptNewPreset(m_Presets, newPresetToSave, Me)
-    
     If (newNameReturn = vbOK) Then
     
-        'The user may have made one or more changes to the preset object, including adding or deleting presets.
+        'The user added a new style, meaning we need to rebuild the style dropdown with the new entry.
+        ' (They may also have *delete* existing styles; we'll deal with that possibility outside this branch.)
         
         'Start by disabling previews
         m_suspendSettingRelay = True
@@ -665,7 +666,8 @@ Private Sub cmdAddStyle_Click(ByVal Shift As ShiftConstants)
         
     End If
     
-    'The user can remove presets and then *cancel* the dialog, so always re-load all presets.
+    'The user can remove presets and then *cancel* the dialog, so always re-load all presets
+    ' regardless of OK/Cancel behavior.
     LoadAllPresets
     
     'If the user just added a preset, set the combo box index to match the preset they added
@@ -799,7 +801,7 @@ Private Sub Form_Load()
         Set m_Presets = New pdToolPreset
         
         'Load any previously saved text styles
-        Const PRESET_BASE_NAME As String = "basic-text-styles"
+        Const PRESET_BASE_NAME As String = "text-basic-styles"
         m_Presets.SetPresetFilePath UserPrefs.GetPresetPath & PRESET_BASE_NAME & ".xml", PRESET_BASE_NAME, "text styles for the basic text tool"
         LoadAllPresets
         
@@ -845,7 +847,6 @@ Private Sub Form_QueryUnload(Cancel As Integer, UnloadMode As Integer)
     If (Not m_lastUsedSettings Is Nothing) Then
         m_lastUsedSettings.SaveAllControlValues
         m_lastUsedSettings.SetParentForm Nothing
-        m_lastUsedSettings.SaveAllControlValues
     End If
     
 End Sub
@@ -891,7 +892,7 @@ Private Sub m_Flyout_FlyoutClosed(origTriggerObject As Control)
     If (Not origTriggerObject Is Nothing) Then origTriggerObject.Value = False
 End Sub
 
-Private Sub m_LastUsedSettings_ReadCustomPresetData()
+Private Sub m_lastUsedSettings_ReadCustomPresetData()
     
     'We don't actually need to read anything here - we just want to always default the style dropdown
     ' to a "blank" value (so that last-used settings are used instead)
@@ -1244,27 +1245,11 @@ Private Function GetPresetParamString(Optional ByVal srcPresetName As String = "
             Case "pdTextBox"
                 If (eControl.hWnd <> txtTextTool.hWnd) Then controlValue = eControl.Text
                 
-            'PhotoDemon's resize UC is a special case.  Because it uses multiple properties (despite being
-            ' a single control), we must combine its various values into a single string.
-            'Case "pdResize"
-            '    controlValue = eControl.GetCurrentSettingsAsXML()
-                
-            'History managers also provide their own XML string
-            'Case "pdHistory"
-            '    controlValue = eControl.GetHistoryAsString()
-                
-            'Metadata management controls provide their own XML string
-            'Case "pdMetadataExport"
-            '    controlValue = eControl.GetMetadataSettings()
-            
-            'Case "pdColorDepth"
-            '    controlValue = eControl.GetAllSettings()
-            
-            'Case "pdPaletteUI"
-            '    controlValue = eControl.SerializeToXML()
-                
             Case "pdRandomizeUI"
                 controlValue = eControl.Value
+                
+            'PD supports a number of other user controls, but they are not exposed on this form.
+            ' (See the command bar UC for details on their implementation.)
                 
         End Select
         
@@ -1282,26 +1267,6 @@ Private Function GetPresetParamString(Optional ByVal srcPresetName As String = "
         
     'Continue with the next control on the parent dialog
     Next eControl
-    
-    'If you want to add custom parameters, do so here:
-    
-'
-'    'After all controls are handled, we give the caller a chance to write their own custom preset entries.  Most dialogs
-'    ' don't need this functionality, but those with custom interfaces (such as the Curves dialog, which has its own
-'    ' special UI requirements) use this to write any additional values to this preset.
-'    m_numCustomPresetEntries = 0
-'    RaiseEvent AddCustomPresetData
-'
-'    'If the user added one or more custom preset entries, the custom preset count will be non-zero.
-'    If (m_numCustomPresetEntries > 0) Then
-'
-'        'Loop through all custom data, and add it one-at-a-time to the preset object
-'        Dim i As Long
-'        For i = 0 To m_numCustomPresetEntries - 1
-'            m_Params.AddParam "custom:" & m_customPresetNames(i), m_customPresetData(i)
-'        Next i
-'
-'    End If
     
     GetPresetParamString = m_Params.GetParamString()
 
@@ -1463,30 +1428,9 @@ Private Function LoadPresetFromString(ByRef srcString As String, Optional ByVal 
                     Case "TextBox", "pdTextBox"
                         eControl.Text = controlValue
                     
-                    'pdTitle is just a boolean
-                    'Case "pdTitle"
-                    '    eControl.Value = CBool(controlValue)
-                    
-                    'Case "pdColorDepth"
-                    '    eControl.SetAllSettings controlValue
-                    
-                    'Case "pdResize"
-                    '    eControl.SetAllSettingsFromXML controlValue
-                        
-                    'Metadata management controls handle their own XML parsing
-                    'Case "pdMetadataExport"
-                    '    eControl.SetMetadataSettings controlValue, True
-                        
-                    'History managers handle their own XML parsing
-                    'Case "pdHistory"
-                    '    eControl.SetHistoryFromString controlValue
-                        
-                    'Case "pdPaletteUI"
-                    '    eControl.CreateFromXML controlValue
-                        
-                    'Case "pdRandomizeUI"
-                    '    eControl.Value = controlValue
-                        
+                    'PD supports a number of other user controls, but they are not exposed on this form.
+                    ' (See the command bar UC for details on their implementation.)
+                
                 End Select
     
             End If
@@ -1495,10 +1439,6 @@ Private Function LoadPresetFromString(ByRef srcString As String, Optional ByVal 
         Next eControl
         
     End If
-    
-    'Raise the ReadCustomPresetData event.  This allows the caller to retrieve any custom preset data from the file (e.g. data that
-    ' does not directly correspond to a traditional control, like the Curves dialog which supports custom curve point data)
-    'RaiseEvent ReadCustomPresetData
     
     'Re-enable previews
     m_suspendSettingRelay = False
