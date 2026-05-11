@@ -6,7 +6,7 @@
 
 <langid>ja-JP</langid>
 <langname>日本語 (Japanese)</langname>
-<langversion>2024.7.53</langversion>
+<langversion>2024.7.54</langversion>
 <langstatus>Complete</langstatus>
 
 <author>Kenji Hoshimoto (Hosiken)</author>
@@ -3132,6 +3132,11 @@ Description: %2
 </phrase>
 
 <phrase>
+<original>text style preset</original>
+<translation></translation>
+</phrase>
+
+<phrase>
 <original>Modify selection</original>
 <translation>選択の変更</translation>
 </phrase>
@@ -3150,7 +3155,7 @@ When finished, click the Submit New Issue button.  Thank you!</original>
 <translation>バグの報告方法</translation>
 </phrase>
 
-<!-- Processor.bas contains 133 phrases. 71 were duplicates of existing phrases, so only 62 new phrases were written to file. -->
+<!-- Processor.bas contains 135 phrases. 72 were duplicates of existing phrases, so only 63 new phrases were written to file. -->
 
 <phrase>
 <original>automatic</original>
@@ -13132,7 +13137,7 @@ Would you like to save your batch list before exiting?</original>
 <translation>このレイヤーを基本テキスト レイヤーに変換するにはここをクリックしてください。</translation>
 </phrase>
 
-<!-- Toolpanel_TextBasic.frm contains 23 phrases. 13 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
+<!-- Toolpanel_TextBasic.frm contains 25 phrases. 15 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
 
 <phrase>
 <original>remap</original>
@@ -13259,7 +13264,7 @@ Would you like to save your batch list before exiting?</original>
 <translation>このレイヤーを高度なテキストに変換するには、ここをクリックしてください。</translation>
 </phrase>
 
-<!-- Toolpanel_Typography.frm contains 65 phrases. 40 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
+<!-- Toolpanel_Typography.frm contains 68 phrases. 43 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
 
 <phrase>
 <original>undo all changes</original>
@@ -14859,10 +14864,10 @@ If you still choose to disable updates, don't forget to visit photodemon.org fro
 
 <!-- Automatic text generation complete. -->
 
-<phrasecount>2811</phrasecount>
+<phrasecount>2812</phrasecount>
 
-<!-- As of this build, PhotoDemon contains 6014 phrases. -->
-<!-- 3203 are duplicates, so only 2811 unique phrases have been written to file. -->
-<!-- These 2811 phrases contain approximately 12161 total words. -->
+<!-- As of this build, PhotoDemon contains 6021 phrases. -->
+<!-- 3209 are duplicates, so only 2812 unique phrases have been written to file. -->
+<!-- These 2812 phrases contain approximately 12164 total words. -->
 
 </pdData>

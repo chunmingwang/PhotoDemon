@@ -6,7 +6,7 @@
 
 <langid>es-MX</langid>
 <langname>español (México)</langname>
-<langversion>9.0.84</langversion>
+<langversion>9.0.85</langversion>
 <langstatus>completo</langstatus>
 
 <author>Plinio C Garcia, Miguel Chamorro, DeepL.com</author>
@@ -3131,6 +3131,11 @@ Description: %2
 </phrase>
 
 <phrase>
+<original>text style preset</original>
+<translation></translation>
+</phrase>
+
+<phrase>
 <original>Modify selection</original>
 <translation>Modificar la selección</translation>
 </phrase>
@@ -3149,7 +3154,7 @@ Cuando termine, haga clic en el botón "Submit New Issue".  Gracias.</translatio
 <translation>Instrucciones para informar de fallos</translation>
 </phrase>
 
-<!-- Processor.bas contains 133 phrases. 71 were duplicates of existing phrases, so only 62 new phrases were written to file. -->
+<!-- Processor.bas contains 135 phrases. 72 were duplicates of existing phrases, so only 63 new phrases were written to file. -->
 
 <phrase>
 <original>automatic</original>
@@ -13131,7 +13136,7 @@ Would tarde te gusta guardar su lista de lotes antes de salir?</translation>
 <translation>Haga clic aquí para convertir esta capa en texto básico.</translation>
 </phrase>
 
-<!-- Toolpanel_TextBasic.frm contains 23 phrases. 13 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
+<!-- Toolpanel_TextBasic.frm contains 25 phrases. 15 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
 
 <phrase>
 <original>remap</original>
@@ -13258,7 +13263,7 @@ Would tarde te gusta guardar su lista de lotes antes de salir?</translation>
 <translation>Haga clic aquí para convertir esta capa en texto avanzado.</translation>
 </phrase>
 
-<!-- Toolpanel_Typography.frm contains 65 phrases. 40 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
+<!-- Toolpanel_Typography.frm contains 68 phrases. 43 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
 
 <phrase>
 <original>undo all changes</original>
@@ -14858,10 +14863,10 @@ If usted todavía elige desactivar las actualizaciones, no se olvide de visitar 
 
 <!-- Automatic text generation complete. -->
 
-<phrasecount>2811</phrasecount>
+<phrasecount>2812</phrasecount>
 
-<!-- As of this build, PhotoDemon contains 6014 phrases. -->
-<!-- 3203 are duplicates, so only 2811 unique phrases have been written to file. -->
-<!-- These 2811 phrases contain approximately 12161 total words. -->
+<!-- As of this build, PhotoDemon contains 6021 phrases. -->
+<!-- 3209 are duplicates, so only 2812 unique phrases have been written to file. -->
+<!-- These 2812 phrases contain approximately 12164 total words. -->
 
 </pdData>

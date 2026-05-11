@@ -6,7 +6,7 @@
 
 <langid>hu-HU</langid>
 <langname>Hungarian</langname>
-<langversion>2026.1.154</langversion>
+<langversion>2026.1.155</langversion>
 <langstatus>complete</langstatus>
 
 <author>István Bánszki</author>
@@ -3134,6 +3134,11 @@ Leírás: %2
 </phrase>
 
 <phrase>
+<original>text style preset</original>
+<translation></translation>
+</phrase>
+
+<phrase>
 <original>Modify selection</original>
 <translation>kijelölés módosítása</translation>
 </phrase>
@@ -3152,7 +3157,7 @@ Ha elkészült, kattintson az „Új probléma beküldése” (Submit New Issue)
 <translation>Hibajelentési útmutató</translation>
 </phrase>
 
-<!-- Processor.bas contains 133 phrases. 71 were duplicates of existing phrases, so only 62 new phrases were written to file. -->
+<!-- Processor.bas contains 135 phrases. 72 were duplicates of existing phrases, so only 63 new phrases were written to file. -->
 
 <phrase>
 <original>automatic</original>
@@ -13134,7 +13139,7 @@ Szeretné menteni a kötegelt listát kilépés előtt?</translation>
 <translation>Kattintson ide a réteg egyszerű szöveggé alakításához.</translation>
 </phrase>
 
-<!-- Toolpanel_TextBasic.frm contains 23 phrases. 13 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
+<!-- Toolpanel_TextBasic.frm contains 25 phrases. 15 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
 
 <phrase>
 <original>remap</original>
@@ -13261,7 +13266,7 @@ Szeretné menteni a kötegelt listát kilépés előtt?</translation>
 <translation>Kattintson ide a réteg haladó szöveggé alakításához.</translation>
 </phrase>
 
-<!-- Toolpanel_Typography.frm contains 65 phrases. 40 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
+<!-- Toolpanel_Typography.frm contains 68 phrases. 43 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
 
 <phrase>
 <original>undo all changes</original>
@@ -14857,10 +14862,10 @@ Ha mégis úgy dönt, hogy letiltja a frissítéseket, ne felejtse el időnként
 
 <!-- Automatic text generation complete. -->
 
-<phrasecount>2811</phrasecount>
+<phrasecount>2812</phrasecount>
 
-<!-- As of this build, PhotoDemon contains 6014 phrases. -->
-<!-- 3203 are duplicates, so only 2811 unique phrases have been written to file. -->
-<!-- These 2811 phrases contain approximately 12161 total words. -->
+<!-- As of this build, PhotoDemon contains 6021 phrases. -->
+<!-- 3209 are duplicates, so only 2812 unique phrases have been written to file. -->
+<!-- These 2812 phrases contain approximately 12164 total words. -->
 
 </pdData>
