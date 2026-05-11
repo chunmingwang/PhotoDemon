@@ -6,7 +6,7 @@
 
 <langid>it-IT</langid>
 <langname>Italiano</langname>
-<langversion>2025.4.18</langversion>
+<langversion>2025.4.19</langversion>
 <langstatus>Completa</langstatus>
 
 <author>GioRock, ManfroMarce</author>
@@ -3132,6 +3132,11 @@ Descrizione: %2
 </phrase>
 
 <phrase>
+<original>text style preset</original>
+<translation></translation>
+</phrase>
+
+<phrase>
 <original>Modify selection</original>
 <translation>Modifica la selezione</translation>
 </phrase>
@@ -3150,7 +3155,7 @@ Quando hai finito, clicca sul pulsante "Submit New Issue".  Grazie!</translation
 <translation>Istruzioni per la segnalazione di bug</translation>
 </phrase>
 
-<!-- Processor.bas contains 133 phrases. 71 were duplicates of existing phrases, so only 62 new phrases were written to file. -->
+<!-- Processor.bas contains 135 phrases. 72 were duplicates of existing phrases, so only 63 new phrases were written to file. -->
 
 <phrase>
 <original>automatic</original>
@@ -13127,7 +13132,7 @@ Vuoi salvare la tua lista prima di uscire?</translation>
 <translation>Clicca qui per convertire questo livello in testo di base.</translation>
 </phrase>
 
-<!-- Toolpanel_TextBasic.frm contains 23 phrases. 13 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
+<!-- Toolpanel_TextBasic.frm contains 25 phrases. 15 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
 
 <phrase>
 <original>remap</original>
@@ -13254,7 +13259,7 @@ Vuoi salvare la tua lista prima di uscire?</translation>
 <translation>Clicca qui per convertire questo livello in testo avanzato.</translation>
 </phrase>
 
-<!-- Toolpanel_Typography.frm contains 65 phrases. 40 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
+<!-- Toolpanel_Typography.frm contains 68 phrases. 43 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
 
 <phrase>
 <original>undo all changes</original>
@@ -14854,10 +14859,10 @@ Se si sceglie comunque di disabilitare gli aggiornamenti, non dimenticate di vis
 
 <!-- Automatic text generation complete. -->
 
-<phrasecount>2810</phrasecount>
+<phrasecount>2811</phrasecount>
 
-<!-- As of this build, PhotoDemon contains 6012 phrases. -->
-<!-- 3202 are duplicates, so only 2810 unique phrases have been written to file. -->
-<!-- These 2810 phrases contain approximately 12159 total words. -->
+<!-- As of this build, PhotoDemon contains 6019 phrases. -->
+<!-- 3208 are duplicates, so only 2811 unique phrases have been written to file. -->
+<!-- These 2811 phrases contain approximately 12162 total words. -->
 
 </pdData>

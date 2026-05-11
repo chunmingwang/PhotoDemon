@@ -111,7 +111,7 @@ Begin VB.Form toolpanel_TextBasic
          Width           =   7110
          _ExtentX        =   12541
          _ExtentY        =   1270
-         Caption         =   "text style"
+         Caption         =   "text style preset"
          FontSizeCaption =   10
       End
       Begin PhotoDemon.pdCheckBox chkAutoOpenText 
@@ -769,11 +769,34 @@ Private Sub csTextFontColor_SetCustomTabTarget(ByVal shiftTabWasPressed As Boole
 End Sub
 
 Private Sub ddStyle_Click()
-    If (ddStyle.ListIndex > 0) And (Not m_suspendSettingRelay) Then LoadPreset ddStyle.List(ddStyle.ListIndex)
+    
+    'Ignore the user selecting the top (blank) style settings
+    If (ddStyle.ListIndex > 0) And (Not m_suspendSettingRelay) Then
+        
+        'Load the preset and refresh all UI elements accordingly
+        LoadPreset ddStyle.List(ddStyle.ListIndex)
+        
+        'Use a special initialization command that basically copies all existing text properties into the newly created layer.
+        Tools.SyncCurrentLayerToToolOptionsUI
+        
+        'Redraw the viewport immediately
+        Dim tmpViewportParams As PD_ViewportParams
+        tmpViewportParams = Viewport.GetDefaultParamObject()
+        tmpViewportParams.curPOI = poi_CornerSE
+        Viewport.Stage2_CompositeAllLayers PDImages.GetActiveImage(), FormMain.MainCanvas(0), VarPtr(tmpViewportParams)
+        
+    End If
+    
 End Sub
 
 Private Sub ddStyle_GotFocusAPI()
     UpdateFlyout 0, True
+    If (Not PDImages.IsImageActive()) Then Exit Sub
+    Processor.FlagInitialNDFXState_Text ptp_Style, ddStyle.ListIndex, PDImages.GetActiveImage.GetActiveLayerID
+End Sub
+
+Private Sub ddStyle_LostFocusAPI()
+    Processor.FlagFinalNDFXState_Text ptp_Style, ddStyle.ListIndex
 End Sub
 
 Private Sub ddStyle_SetCustomTabTarget(ByVal shiftTabWasPressed As Boolean, newTargetHwnd As Long)
@@ -892,7 +915,7 @@ Private Sub m_Flyout_FlyoutClosed(origTriggerObject As Control)
     If (Not origTriggerObject Is Nothing) Then origTriggerObject.Value = False
 End Sub
 
-Private Sub m_lastUsedSettings_ReadCustomPresetData()
+Private Sub m_LastUsedSettings_ReadCustomPresetData()
     
     'We don't actually need to read anything here - we just want to always default the style dropdown
     ' to a "blank" value (so that last-used settings are used instead)
@@ -1107,6 +1130,29 @@ Public Sub NotifyNewLayerCreated()
         UpdateFlyout 0, True
         Me.txtTextTool.SetFocusToEditBox True
     End If
+End Sub
+
+'Synchronize *all* UI elements on this page to reflect the current (basic text) layer's settings
+Public Sub SyncSettingsToCurrentLayer()
+    
+    txtTextTool.Text = PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_Text)
+    cboTextFontFace.ListIndex = cboTextFontFace.ListIndexByString(PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_FontFace), vbTextCompare)
+    sldTextFontSize.Value = PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_FontSize)
+    csTextFontColor.Color = PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_FontColor)
+    cboTextRenderingHint.ListIndex = PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_TextAntialiasing)
+    sltTextClarity.Value = PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_TextContrast)
+    btnFontStyles(0).Value = CBool(PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_FontBold))
+    btnFontStyles(1).Value = CBool(PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_FontItalic))
+    btnFontStyles(2).Value = CBool(PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_FontUnderline))
+    btnFontStyles(3).Value = CBool(PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_FontStrikeout))
+    btsHAlignment.ListIndex = PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_HorizontalAlignment)
+    btsVAlignment.ListIndex = PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_VerticalAlignment)
+    
+    'For now, *unselect* any active styles.  (In the future, we will need to match these via some sort
+    ' of checksum, since styles can be edited, so if the user previously applied a style, then changed the
+    ' style contents, the layer wouldn't match correctly if we only tagged style *name* and not style *contents*.)
+    ddStyle.ListIndex = 0
+    
 End Sub
 
 'Updating against the current theme accomplishes a number of things:

@@ -89,7 +89,7 @@ Begin VB.Form toolpanel_TextAdvanced
          Width           =   7110
          _ExtentX        =   12541
          _ExtentY        =   1270
-         Caption         =   "text style"
+         Caption         =   "text style preset"
          FontSizeCaption =   10
       End
    End
@@ -1621,11 +1621,34 @@ Private Sub cmdFlyoutLock_SetCustomTabTarget(Index As Integer, ByVal shiftTabWas
 End Sub
 
 Private Sub ddStyle_Click()
-    If (ddStyle.ListIndex > 0) And (Not m_suspendSettingRelay) Then LoadPreset ddStyle.List(ddStyle.ListIndex)
+    
+    'Ignore the user selecting the top (blank) style settings
+    If (ddStyle.ListIndex > 0) And (Not m_suspendSettingRelay) Then
+        
+        'Load the preset and refresh all UI elements accordingly
+        LoadPreset ddStyle.List(ddStyle.ListIndex)
+        
+        'Use a special initialization command that basically copies all existing text properties into the newly created layer.
+        Tools.SyncCurrentLayerToToolOptionsUI
+        
+        'Redraw the viewport immediately
+        Dim tmpViewportParams As PD_ViewportParams
+        tmpViewportParams = Viewport.GetDefaultParamObject()
+        tmpViewportParams.curPOI = poi_CornerSE
+        Viewport.Stage2_CompositeAllLayers PDImages.GetActiveImage(), FormMain.MainCanvas(0), VarPtr(tmpViewportParams)
+        
+    End If
+    
 End Sub
 
 Private Sub ddStyle_GotFocusAPI()
     UpdateFlyout 0, True
+    If (Not PDImages.IsImageActive()) Then Exit Sub
+    Processor.FlagInitialNDFXState_Text ptp_Style, ddStyle.ListIndex, PDImages.GetActiveImage.GetActiveLayerID
+End Sub
+
+Private Sub ddStyle_LostFocusAPI()
+    Processor.FlagFinalNDFXState_Text ptp_Style, ddStyle.ListIndex
 End Sub
 
 Private Sub ddStyle_SetCustomTabTarget(ByVal shiftTabWasPressed As Boolean, newTargetHwnd As Long)
@@ -1797,7 +1820,7 @@ Private Sub m_Flyout_FlyoutClosed(origTriggerObject As Control)
     If (Not origTriggerObject Is Nothing) Then origTriggerObject.Value = False
 End Sub
 
-Private Sub m_lastUsedSettings_ReadCustomPresetData()
+Private Sub m_LastUsedSettings_ReadCustomPresetData()
 
     'We don't actually need to read anything here - we just want to always default the style dropdown
     ' to a "blank" value (so that last-used settings are used instead)
@@ -2426,7 +2449,11 @@ Public Sub SyncSettingsToCurrentLayer()
     chkFillFirst.Value = PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_OutlineAboveFill)
     tudScale(0).Value = PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_CharScaleX) * 100#
     tudScale(1).Value = PDImages.GetActiveImage.GetActiveLayer.GetTextLayerProperty(ptp_CharScaleY) * 100#
-
+    
+    'For now, *unselect* any active styles.  (In the future, we will need to match these via some sort
+    ' of checksum, since style names and contents can change.)
+    ddStyle.ListIndex = 0
+    
 End Sub
 
 'Updating against the current theme accomplishes a number of things:
