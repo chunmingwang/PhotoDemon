@@ -6,7 +6,7 @@
 
 <langid>zh-TW</langid>
 <langname>正體中文</langname>
-<langversion>2026.1.155</langversion>
+<langversion>2026.1.156</langversion>
 <langstatus>Translation completed on 2026/03/24</langstatus>
 
 <author>昇</author>
@@ -3141,6 +3141,11 @@ Description: %2
 </phrase>
 
 <phrase>
+<original>text style preset</original>
+<translation></translation>
+</phrase>
+
+<phrase>
 <original>Modify selection</original>
 <translation>修改選取範圍</translation>
 </phrase>
@@ -3159,7 +3164,7 @@ When finished, click the Submit New Issue button.  Thank you!</original>
 <translation>錯誤回報指南</translation>
 </phrase>
 
-<!-- Processor.bas contains 133 phrases. 71 were duplicates of existing phrases, so only 62 new phrases were written to file. -->
+<!-- Processor.bas contains 135 phrases. 72 were duplicates of existing phrases, so only 63 new phrases were written to file. -->
 
 <phrase>
 <original>automatic</original>
@@ -13161,7 +13166,7 @@ PhotoDemon 可以透過加入空白邊界或進行裁切來避免此問題。</t
 <translation>單擊此處將此層轉換為基本文字。</translation>
 </phrase>
 
-<!-- Toolpanel_TextBasic.frm contains 23 phrases. 13 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
+<!-- Toolpanel_TextBasic.frm contains 25 phrases. 15 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
 
 <phrase>
 <original>remap</original>
@@ -13288,7 +13293,7 @@ PhotoDemon 可以透過加入空白邊界或進行裁切來避免此問題。</t
 <translation>單擊此處將此層轉換為進階文字。</translation>
 </phrase>
 
-<!-- Toolpanel_Typography.frm contains 65 phrases. 40 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
+<!-- Toolpanel_Typography.frm contains 68 phrases. 43 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
 
 <phrase>
 <original>undo all changes</original>
@@ -14928,10 +14933,10 @@ PhotoDemon 可以透過分析其他元數據（例如量化表）來推斷品質
 
 <!-- Automatic text generation complete. -->
 
-<phrasecount>2811</phrasecount>
+<phrasecount>2812</phrasecount>
 
-<!-- As of this build, PhotoDemon contains 6014 phrases. -->
-<!-- 3203 are duplicates, so only 2811 unique phrases have been written to file. -->
-<!-- These 2811 phrases contain approximately 12161 total words. -->
+<!-- As of this build, PhotoDemon contains 6021 phrases. -->
+<!-- 3209 are duplicates, so only 2812 unique phrases have been written to file. -->
+<!-- These 2812 phrases contain approximately 12164 total words. -->
 
 </pdData>

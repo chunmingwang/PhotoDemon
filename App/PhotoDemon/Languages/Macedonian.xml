@@ -6,7 +6,7 @@
 
 <langid>mk-MK</langid>
 <langname>Македонски</langname>
-<langversion>8.9.1781</langversion>
+<langversion>8.9.1782</langversion>
 <langstatus>80% complete</langstatus>
 
 <author>Бобан Ѓерасимоски</author>
@@ -3126,6 +3126,11 @@ Error број %
 </phrase>
 
 <phrase>
+<original>text style preset</original>
+<translation></translation>
+</phrase>
+
+<phrase>
 <original>Modify selection</original>
 <translation></translation>
 </phrase>
@@ -3142,7 +3147,7 @@ When finished, click the Submit New Issue button.  Thank you!</original>
 <translation>инструкциите за пријавување на бубачки</translation>
 </phrase>
 
-<!-- Processor.bas contains 133 phrases. 71 were duplicates of existing phrases, so only 62 new phrases were written to file. -->
+<!-- Processor.bas contains 135 phrases. 72 were duplicates of existing phrases, so only 63 new phrases were written to file. -->
 
 <phrase>
 <original>automatic</original>
@@ -13121,7 +13126,7 @@ Would сакате да ги зачувате вашата листа сериј
 <translation>Кликни тука за да се претворат овој слој на основниот текст слој.</translation>
 </phrase>
 
-<!-- Toolpanel_TextBasic.frm contains 23 phrases. 13 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
+<!-- Toolpanel_TextBasic.frm contains 25 phrases. 15 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
 
 <phrase>
 <original>remap</original>
@@ -13248,7 +13253,7 @@ Would сакате да ги зачувате вашата листа сериј
 <translation></translation>
 </phrase>
 
-<!-- Toolpanel_Typography.frm contains 65 phrases. 40 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
+<!-- Toolpanel_Typography.frm contains 68 phrases. 43 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
 
 <phrase>
 <original>undo all changes</original>
@@ -14844,10 +14849,10 @@ If сеуште изберете да го исклучите ажурирања
 
 <!-- Automatic text generation complete. -->
 
-<phrasecount>2811</phrasecount>
+<phrasecount>2812</phrasecount>
 
-<!-- As of this build, PhotoDemon contains 6014 phrases. -->
-<!-- 3203 are duplicates, so only 2811 unique phrases have been written to file. -->
-<!-- These 2811 phrases contain approximately 12161 total words. -->
+<!-- As of this build, PhotoDemon contains 6021 phrases. -->
+<!-- 3209 are duplicates, so only 2812 unique phrases have been written to file. -->
+<!-- These 2812 phrases contain approximately 12164 total words. -->
 
 </pdData>

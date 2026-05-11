@@ -6,7 +6,7 @@
 
 <langid>id-ID</langid>
 <langname>Bahasa Indonesia (ID)</langname>
-<langversion>2024.4.13</langversion>
+<langversion>2024.4.14</langversion>
 <langstatus>Done</langstatus>
 
 <author>Ari Sohandri Putra</author>
@@ -3131,6 +3131,11 @@ Deskripsi: %2
 </phrase>
 
 <phrase>
+<original>text style preset</original>
+<translation></translation>
+</phrase>
+
+<phrase>
 <original>Modify selection</original>
 <translation>Ubah seleksi</translation>
 </phrase>
@@ -3149,7 +3154,7 @@ Setelah selesai, klik tombol Submit New Issue.  Terima kasih!</translation>
 <translation>Instruksi laporan bug</translation>
 </phrase>
 
-<!-- Processor.bas contains 133 phrases. 71 were duplicates of existing phrases, so only 62 new phrases were written to file. -->
+<!-- Processor.bas contains 135 phrases. 72 were duplicates of existing phrases, so only 63 new phrases were written to file. -->
 
 <phrase>
 <original>automatic</original>
@@ -13131,7 +13136,7 @@ Apakah Anda ingin menyimpan daftar batch Anda sebelum keluar?</translation>
 <translation>Klik di sini untuk mengonversi lapisan ini ke teks dasar.</translation>
 </phrase>
 
-<!-- Toolpanel_TextBasic.frm contains 23 phrases. 13 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
+<!-- Toolpanel_TextBasic.frm contains 25 phrases. 15 were duplicates of existing phrases, so only 10 new phrases were written to file. -->
 
 <phrase>
 <original>remap</original>
@@ -13258,7 +13263,7 @@ Apakah Anda ingin menyimpan daftar batch Anda sebelum keluar?</translation>
 <translation>Klik di sini untuk mengonversi lapisan ini ke teks lanjutan.</translation>
 </phrase>
 
-<!-- Toolpanel_Typography.frm contains 65 phrases. 40 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
+<!-- Toolpanel_Typography.frm contains 68 phrases. 43 were duplicates of existing phrases, so only 25 new phrases were written to file. -->
 
 <phrase>
 <original>undo all changes</original>
@@ -14858,10 +14863,10 @@ Jika Anda masih memilih untuk menonaktifkan pembaruan, jangan lupa untuk mengunj
 
 <!-- Automatic text generation complete. -->
 
-<phrasecount>2811</phrasecount>
+<phrasecount>2812</phrasecount>
 
-<!-- As of this build, PhotoDemon contains 6014 phrases. -->
-<!-- 3203 are duplicates, so only 2811 unique phrases have been written to file. -->
-<!-- These 2811 phrases contain approximately 12161 total words. -->
+<!-- As of this build, PhotoDemon contains 6021 phrases. -->
+<!-- 3209 are duplicates, so only 2812 unique phrases have been written to file. -->
+<!-- These 2812 phrases contain approximately 12164 total words. -->
 
 </pdData>
